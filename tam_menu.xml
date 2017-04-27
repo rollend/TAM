@@ -3,13 +3,13 @@
 <openerp>
     <data>
         <menuitem id = "menu_tam_main" name = "VOS" />
-        <menuitem id = "menu_vos" parent = "menu_vos_main" name = "VOS User" />
-        <menuitem id = "menu_vos_user" parent = "menu_vos" name = "VOS Users" action = "action_list_vos_user" />
-        <menuitem id = "menu_vos_group" parent = "menu_vos" name = "VOS Groups" action = "action_list_vos_group" />
-        <menuitem id = "menu_vos_discountrule" parent = "menu_vos" name = "VOS Discount Rules" action = "action_list_vos_discountrule" />
-        <menuitem id = "menu_vos_wish" parent = "menu_vos" name = "VOS Wishes" action = "action_list_vos_wish" />
+        <menuitem id = "menu_tam" parent = "menu_tam_main" name = "TAM User" />
+        <menuitem id = "menu_tam_user" parent = "menu_tam" name = "TAM Users" action = "action_list_tam_user" />
+        <menuitem id = "menu_tam_group" parent = "menu_tam" name = "TAM Groups" action = "action_list_tam_group" />
+        <menuitem id = "menu_tam_discountrule" parent = "menu_tam" name = "TAM Discount Rules" action = "action_list_tam_discountrule" />
+        <menuitem id = "menu_tam_wish" parent = "menu_tam" name = "TAM Wishes" action = "action_list_tam_wish" />
        
-        <menuitem id = "menu_vos_order" parent = "menu_vos" name = "VOS Orders" action = "action_list_vos_order" />
+        <menuitem id = "menu_tam_order" parent = "menu_tam" name = "TAM Orders" action = "action_list_tam_order" />
 
 
     </data>
