@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<record id="view_vos_orderline_make_order" model="ir.ui.view">
+<field name="name">Make Order</field>
+<field name="model">vos.make.order</field>
+<field name="type">form</field>
+<field name="arch" type="xml">
+<form string="Make Order">
+<separator colspan="4" string="Do you really want to make the order ?" />
+<newline/>
+    <field name="order_reference"/>
+<separator string="" colspan="6"/>
+<button special="cancel" string="Cancel" icon="gtk-cancel"/>
+<button name="orders_in_so" string="Make Order" type="object" icon="terp-gtk-go-back-rtl"/>
+</form>
+</field>
+</record>
+<record id="action_vos_orderline_make_order" model="ir.actions.act_window">
+<field name="name">Make Order</field>
+<field name="type">ir.actions.act_window</field>
+<field name="res_model">vos.make.order</field>
+<field name="view_type">form</field>
+<field name="view_mode">form</field>
+<field name="view_id" ref="view_vos_orderline_make_order"/>
+<field name="target">new</field>
+<field name="multi">True</field>
+</record>
+<record model="ir.values" id="vos_orderline_make_order">
+<field name="model_id" ref="vos.model_vos_orderline" />
+<field name="name">Make Order</field>
+<field name="key2">client_action_multi</field>
+<field name="value" eval="'ir.actions.act_window,' + str(ref('action_vos_orderline_make_order'))" />
+<field name="key">action</field>
+<field name="model">vos.orderline</field>
+</record>
+</data>
+</openerp>

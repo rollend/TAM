@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        <record model = "ir.ui.view" id = "view_list_vos_user">
+            <field name = "name">vos.user.tree</field>
+          
+            <field name = "model">vos.user</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string = "VOS User" toolbar = "1">
+                    <field name = "name" />
+                    <field name = "email" />
+                    <field name = "active" />
+                </tree>
+            </field>      
+        </record> 
+        
+        <record model = "ir.ui.view" id = "view_list_vos_group">
+            <field name = "name">vos.group.tree</field>
+          
+            <field name = "model">vos.group</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string = "VOS Group" toolbar = "1">
+                    <field name = "name" />
+                    <field name = "description" />
+                    <field name = "active" />
+                </tree>
+            </field>      
+        </record> 
+        
+        <record model = "ir.ui.view" id = "view_form_vos_group">
+            <field name = "name">vos.group.form</field>
+            <field name = "model">vos.group</field>
+            <field name = "type">form</field>
+            <field name = "arch" type = "xml">
+                <form string = "VOS Group">
+                    <field name ="name" />
+                    <field name = "default_discount" /> 
+                    <field name ="description" />
+                    <field name = "active" />
+                    <newline />
+                    <separator string = "Discount Rules" colspan = "4" />
+                    <field name = "discountrule_ids" widget = "many2many" colspan = "4" nolabel = "1" />
+                </form>
+            </field>
+        </record>
+        
+        <record model = "ir.ui.view" id = "view_list_vos_discountrule">
+            <field name = "name">vos.discountrule.tree</field>
+            <field name = "model">vos.discountrule</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string = "VOS Discount Rules" toolbar = "1">
+                    <field name = "name" />
+                    <field name = "category_id" />
+                    <field name = "discount" />
+                </tree>
+            </field>      
+        </record> 
+        
+        <record model = "ir.ui.view" id = "view_list_vos_wish">
+            <field name = "name">vos.wishline.tree</field>
+          
+            <field name = "model">vos.wishline</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string = "VOS Wishes" toolbar = "1">
+                    <field name = "name" />
+                    <field name = "buyer" />
+                    <field name = "qty" />
+                </tree>
+            </field>      
+        </record> 
+        
+        <record model = "ir.ui.view" id ="view_form_vos_wish">
+            <field name = "name">vos.wishline.form</field>
+            <field name = "model">vos.wishline</field>
+            <field name ="type">form</field>
+            <field name = "arch" type = "xml">
+                <form string = "VOS Wishes">
+                    <field name = "state" widget="statusbar"/>
+                    
+                    <button name = "wish_confirm" string = "Confirm" icon = "gtk-ok" type = "object" attrs="{'invisible':[('state','!=','draft')]}" />
+                    <button name = "wish_accept" string = "Accept" icon = "gtk-ok" type = "object" attrs="{'invisible':[('state','!=','confirmed')]}" />
+                    <newline />
+                    <field name = "name" attrs = "{'readonly':[('state','!=','draft')]}" />
+                    <field name = "qty" />
+                    <field name = "buyer" />
+                    <field name = "product_des" attrs = "{'readonly':[('state','!=','draft')]}" />
+                    <field name = "buyer_notice" />
+                    <field name = "seller_notice" />
+                    <field name = "product_id" domain = "[('sale_ok','=',True)]" attrs="{'invisible':[('state','!=','accepted')]}" />
+                    <button name = "wish_to_order" string = "Convert to Sales Order Line" icon = "gtk-ok" type = "object" attrs="{'invisible':[('state','!=','accepted')]}" />
+                </form>
+            </field>
+        </record>
+        
+        
+        <record model = "ir.ui.view" id = "view_list_vos_order">
+            <field name = "name">vos.orderline.tree</field>
+          
+            <field name = "model">vos.orderline</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">	
+                <tree string = "VOS Orders" toolbar = "1" colors=" #06775B:state in ('draft',); grey:state in ('cancel','denied');blue:state in ('confirmed','accepted');black:state in ('in_so',)">
+                    <field name = "product_id" />
+                    <field name = "buyer" />
+                    <field name = "qty" />
+                    <field name = "verqty" />
+                    <field name = "state" />
+                    <field name = "confirm_time" />
+                </tree>
+            </field>      
+        </record> 
+        
+        <record model = "ir.ui.view" id = "view_form_vos_order">
+            <field name = "name">vos.orderline.form</field>
+          
+            <field name = "model">vos.orderline</field>
+            <field name = "type">form</field>
+            <field name = "arch" type = "xml">
+                <form string = "VOS Order">
+                    <field name = "state" widget="statusbar"/>
+                    <newline />
+                    <separator string = "Order details" colspan="4" />
+                    
+                    <group col = "6" colspan = "4">
+                        <field name = "buyer" attrs="{'readonly':[('state','=','in_so')]}" />
+                        <field name = "so_id_name" readonly = "1" />
+                        <field name = "wish_id" readonly = "1" />
+                        <field name = "sol_id" readonly = "1" />
+                        <field name = "product_id" domain ="[('sale_ok','=',True)]" attrs="{'readonly':[('state','=','in_so')]}" />
+                        <field name = "list_price" readonly = "1" />
+                        <field name = "qty" attrs="{'readonly':[('state','=','in_so')]}" />
+                        <field name = "discount" attrs="{'readonly':[('state','=','in_so')]}" />
+                        <field name = "tax" attrs="{'readonly':[('state','=','in_so')], 'required':[('state','=','accepted')]}" />
+                        <field name = "subtotal" readonly = "1" />
+                        <field name = "confirm_time" readonly = "1" />
+                        
+                    </group>
+                                        
+                    
+                    <newline />
+                    <group col = "4" colspan = "4">
+                        <separator string = "Notice" colspan="4" />
+                        <field name = "buyer_notice" />
+                        <field name = "seller_notice" />
+                        
+                    </group>
+                    
+                    <group col = "6" colspan = "4">
+                        <separator string = "Order Action" colspan = "4" />
+                        <newline />
+                        <field name  = "so_id" string = "To Sales Order" domain = "[('state','=','draft')]" attrs="{'invisible':[('state','!=','accepted')], 'required':[('state','=','accepted')]}" />
+                        <button name = "order_confirm" string = "Confirm" icon = "gtk-ok" type = "object" attrs="{'invisible':[('state','!=','draft')]}" />
+                        <button name = "order_accept" string = "Accept" icon = "gtk-ok" type = "object" attrs="{'invisible':[('state','!=','confirmed')]}" />
+                    
+                        
+                        <button name = "order_in_so" string = "Add in Sales Order" icon = "gtk-ok" type = "object" attrs="{'invisible':[('state','!=','accepted')]}" />
+                        <button name = "apply_group_discount" string = "Apply Group Discount" icon = "gtk-ok" type = "object" attrs="{'invisible':[('state','=','in_so')]}" />
+                        
+                    </group>
+                </form>
+            </field>      
+        </record> 
+    
+        <record model = "ir.actions.act_window" id = "action_list_vos_user">  
+            <field name = "name">VOS User</field>
+           <!-- <field name = "view_id" ref = "view_list_vos_user" /> -->
+            <field name = "res_model">vos.user</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>      
+        </record>
+        
+        
+        <record model = "ir.actions.act_window" id = "action_list_vos_group">  
+            <field name = "name">VOS Group</field>
+           
+            <field name = "res_model">vos.group</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>      
+        </record>
+        
+        <record model = "ir.actions.act_window" id = "action_list_vos_discountrule">  
+            <field name = "name">VOS Discount Rule</field>
+           
+            <field name = "res_model">vos.discountrule</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>      
+        </record>
+        
+         <record model = "ir.actions.act_window" id = "action_list_vos_wish">  
+            <field name = "name">VOS Wish</field>
+            <field name = "res_model">vos.wishline</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>           
+        </record>
+        
+        <record model = "ir.actions.act_window" id = "action_list_vos_order">  
+            <field name = "name">VOS Order</field>
+            <field name = "res_model">vos.orderline</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+
+        
+    </data>
+</openerp>
